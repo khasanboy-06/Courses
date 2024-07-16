@@ -8,8 +8,8 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.request import Request
 
-from .models import Comment, Course, Lesson, User, Like_or_DislikeVideo
-from .serializers import CourseSerializer, CommentSerializer, LessonSerializer, EmailSerializer, VideoLikeSerializer
+from .models import Comment, Course, Lesson, User, Like_or_DislikeLesson
+from .serializers import CourseSerializer, CommentSerializer, LessonSerializer, EmailSerializer, LessonLikeSerializer
 from .permissions import CoursePermission, LessonPermission
 
 
@@ -56,20 +56,26 @@ class SendEmailToUserView(APIView):
         )
         return Response({"message":"Xabar yuborildi."})
 
+class LikeLessonView(APIView):
+    def get(self, request, pk):
+        like = len(Like_or_DislikeLesson.objects.filter(like_or_dislike=True, lesson_model_id=pk))
+        dislike = len(Like_or_DislikeLesson.objects.filter(like_or_dislike=True, lesson_model_id=pk))
+        return Response({"like":like, "dislike":dislike})
 
-class VideoLikesView(APIView):
+    
+class CreateLikeLessonView(APIView):
     def post(self, request):
         try:
-            like_or_dislike = Like_or_DislikeVideo.objects.filter(author_id=request.data.get("author"))
-            for like in like_or_dislike:
+            like_dislike = Like_or_DislikeLesson.objects.filter(author_id=request.data.get("author"))
+            for like in like_dislike:
                 like.delete()
         except:
             pass
 
-        serializer = VideoLikeSerializer(data=request.data)
+        serializer = LessonLikeSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         like_or_dislike = serializer.save()
-        return Response(VideoLikeSerializer(like_or_dislike))
-    
+
+        return Response(LessonLikeSerializer(like_or_dislike).data)
 
     

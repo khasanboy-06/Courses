@@ -24,7 +24,7 @@ from django.conf import settings
 from django.conf.urls.static import static
 
 from course_app.views import (LessonAPIViewSet, CommentAPIViewSet, CourseAPIViewSet, 
-                            SendEmailToUserView, VideoLikesView)
+                            SendEmailToUserView, CreateLikeLessonView, LikeLessonView)
 
 router = routers.SimpleRouter()
 router.register('lesson', LessonAPIViewSet, basename='lesson')
@@ -40,7 +40,9 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('api/v1/send/email/', SendEmailToUserView.as_view()),
-    path('api/v1/like/', VideoLikesView.as_view()),
+    path('api/v1/lesson/<int:pk>/like/', LikeLessonView.as_view()),
+    path('api/v1/like/create/', CreateLikeLessonView.as_view()),
+
 
     # Router url.
     path('api/v1/', include(router.urls)),

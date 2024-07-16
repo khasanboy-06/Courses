@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import Comment, Course, Lesson, Like_or_DislikeVideo
+from .models import Comment, Course, Lesson, Like_or_DislikeLesson
 
 
 class CourseSerializer(serializers.ModelSerializer):
@@ -21,9 +21,9 @@ class LessonSerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class VideoLikeSerializer(serializers.ModelSerializer):
+class LessonLikeSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Like_or_DislikeVideo
+        model = Like_or_DislikeLesson
         fields = '__all__'
 
 

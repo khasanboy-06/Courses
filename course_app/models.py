@@ -33,7 +33,7 @@ class Comment(models.Model):
     text = models.TextField()
     lesson = models.ForeignKey(Lesson, on_delete=models.CASCADE)
 
-class Like_or_DislikeVideo(models.Model):
+class Like_or_DislikeLesson(models.Model):
     lesson_model = models.ForeignKey(Lesson, on_delete=models.CASCADE)
     like_or_dislike = models.BooleanField()
     author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True)
