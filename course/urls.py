@@ -16,22 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from rest_framework import routers
-
-from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
-
 from django.conf import settings
 from django.conf.urls.static import static
+from drf_spectacular.views import SpectacularAPIView, SpectacularRedocView, SpectacularSwaggerView
+from rest_framework import routers
 
 from course_app.views import (LessonAPIViewSet, CommentAPIViewSet, CourseAPIViewSet, 
-                            SendEmailToUserView, CreateLikeLessonView, LikeLessonView)
+                               SendEmailToUserView, LikeLessonView, CreateLikeLessonView)
 
 router = routers.SimpleRouter()
 router.register('lesson', LessonAPIViewSet, basename='lesson')
 router.register('comment', CommentAPIViewSet, basename='comment')
 router.register('course', CourseAPIViewSet, basename='course')
 
-
+# Registratsiya qismi urli
 api_urlpatterns = [
     path('accounts/', include('rest_registration.api.urls')),
 ]
@@ -42,7 +40,6 @@ urlpatterns = [
     path('api/v1/send/email/', SendEmailToUserView.as_view()),
     path('api/v1/lesson/<int:pk>/like/', LikeLessonView.as_view()),
     path('api/v1/like/create/', CreateLikeLessonView.as_view()),
-
 
     # Router url.
     path('api/v1/', include(router.urls)),

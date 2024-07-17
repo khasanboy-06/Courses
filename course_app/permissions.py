@@ -1,5 +1,6 @@
 from rest_framework.permissions import BasePermission, SAFE_METHODS     
 
+# Darslar uchun berilgan ruxsat va cheklovlar
 class LessonPermission(BasePermission):
     def has_permission(self, request, view):
         if request.user.is_authenticated and request.method in SAFE_METHODS:
@@ -14,8 +15,9 @@ class LessonPermission(BasePermission):
         if request.user.is_superuser and request.method == 'DELETE':
             return True
         return False
+#---------------------------------------------------
 
-
+# Kurslar uchun berilgan ruxsat va cheklovlar
 class CoursePermission(BasePermission):
     def has_permission(self, request, view):
         if request.method in SAFE_METHODS:
@@ -26,5 +28,4 @@ class CoursePermission(BasePermission):
         if request.user.is_superuser:
             return True
         return request.method in SAFE_METHODS
-
-
+#-----------------------------------------------
