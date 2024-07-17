@@ -37,6 +37,7 @@ api_urlpatterns = [
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    # Like va Email qismi uchun yozilgan url.
     path('api/v1/send/email/', SendEmailToUserView.as_view()),
     path('api/v1/lesson/<int:pk>/like/', LikeLessonView.as_view()),
     path('api/v1/like/create/', CreateLikeLessonView.as_view()),
